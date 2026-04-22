@@ -1,7 +1,7 @@
 // ==WindhawkMod==
 // @id              taskbar-autohide-instant-show
 // @name            Taskbar Auto-Hide Instant Show
-// @description     Removes the delay before the taskbar appears with custom animation types (elastic, bounce, fade, overshoot, snap, swing, silky slide+fade, etc.)
+// @description     Removes the delay before the taskbar appears with custom animation types (none, slide, elastic, bounce, fade, slide+fade, overshoot)
 // @version         2.2
 // @author          Bo0ii
 // @github          https://github.com/Bo0ii
