@@ -47,13 +47,6 @@ Combines sliding with a fade effect using a quintic ease — the silkiest feel.
 ### Overshoot
 Subtle spring past the target, then settles back.
 
-## Reliability
-
-If the taskbar doesn't appear when hovering the screen edge over fullscreen
-apps (Chrome F11, fullscreen terminals, games), enable *Edge detection* —
-now on by default. It polls cursor position and retries the show trigger
-while the cursor stays at the edge and the taskbar is still hidden.
-
 ## Settings
 
 For **Slide** mode, use *Show/Hide speedup (%)* to control speed.
@@ -115,14 +108,13 @@ For all other modes, use *Show/Hide duration (ms)* to control timing.
   $description: >-
     Enable this if you use ExplorerPatcher or similar to use the old
     Windows 10 taskbar on Windows 11.
-- edgeDetection: true
-  $name: Edge detection (reliability)
+- edgeDetection: false
+  $name: Edge detection for empty monitors
   $description: >-
-    Polls the cursor position and retries the show trigger while the cursor
-    sits at the screen edge. Fixes cases where the taskbar refuses to appear
-    over fullscreen apps (Chrome F11, fullscreen terminals), on empty
-    monitors, or when a foreground app swallows the mouse-edge event.
-    Enabled by default.
+    Enable this if the taskbar does not appear when hovering the screen
+    edge on a monitor with no visible windows, or when a fullscreen app
+    swallows the mouse-edge event. Creates a background thread that polls
+    the cursor position.
 */
 // ==/WindhawkModSettings==
 
