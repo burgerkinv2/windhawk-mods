@@ -2,7 +2,7 @@
 // @id              taskbar-autohide-instant-show
 // @name            Taskbar Auto-Hide Instant Show
 // @description     Removes the delay before the taskbar appears with custom animation types (none, slide, elastic, bounce, fade, slide+fade, overshoot)
-// @version         2.2
+// @version         2.2.1
 // @author          Bo0ii
 // @github          https://github.com/Bo0ii
 // @homepage        https://github.com/Bo0ii/windhawk-mods
@@ -280,6 +280,19 @@ static int Lerp(int a, int b, double t) {
     return a + (int)((b - a) * t);
 }
 
+void ForceTaskbarRepaint(HWND hWnd) {
+    // Fade animations temporarily make the taskbar a layered translucent
+    // window (WS_EX_LAYERED + SetLayeredWindowAttributes). While a top-level
+    // window is layered, Windows doesn't always invalidate/repaint its child
+    // areas when their content changes. For the taskbar this leaves ghost
+    // taskbar buttons of closed windows on screen until something else forces
+    // a repaint (e.g. hovering the button). Force a full synchronous repaint
+    // of the taskbar and all its child windows after the animation is done.
+    RedrawWindow(hWnd, NULL, NULL,
+                 RDW_INVALIDATE | RDW_ERASE | RDW_ALLCHILDREN |
+                 RDW_UPDATENOW);
+}
+
 void DoCustomAnimation(HWND hWnd,
                        const RECT* startRect,
                        const RECT* endRect,
@@ -439,6 +452,8 @@ void DoCustomAnimation(HWND hWnd,
             SetLayeredWindowAttributes(hWnd, 0, 255, LWA_ALPHA);
         }
     }
+
+    ForceTaskbarRepaint(hWnd);
 }
 
 using TrayUI_SlideWindow_t = void(WINAPI*)(void* pThis,
